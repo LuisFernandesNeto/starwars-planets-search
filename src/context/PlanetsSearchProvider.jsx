@@ -58,7 +58,7 @@ function PlanetsSearchProvider({ children }) {
           Number(planet[value.column]) < Number(value.value)
         ));
         setFilteredPlanets(filtered);
-      } else if (value.comparison === 'igual a') {
+      } else {
         const filtered = filteredPlanets.filter((planet) => (
           Number(planet[value.column]) === Number(value.value)
         ));
