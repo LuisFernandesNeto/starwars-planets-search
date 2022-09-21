@@ -4,21 +4,33 @@ import PlanetsSearchContext from './PlanetsSearchContext';
 import getPlanets from '../services/api';
 
 function PlanetsSearchProvider({ children }) {
-  const [state, setState] = useState([]);
+  const [planets, setPlanets] = useState([]);
+  const [filter, setFilter] = useState({ name: '' });
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
 
   const contextType = {
-    state,
-    setState,
+    planets,
+    setPlanets,
+    filter,
+    setFilter,
+    filteredPlanets,
   };
 
   const fetchPlanetsSearch = async () => {
     const response = await getPlanets();
-    setState(response);
+    setPlanets(response);
   };
 
   useEffect(() => {
     fetchPlanetsSearch();
   }, []);
+
+  useEffect(() => {
+    const filtered = planets.filter((planet) => (
+      planet.name.toLowerCase().includes(filter.name.toLowerCase())
+    ));
+    setFilteredPlanets(filtered);
+  }, [filter]);
 
   return (
     <PlanetsSearchContext.Provider value={ contextType }>
