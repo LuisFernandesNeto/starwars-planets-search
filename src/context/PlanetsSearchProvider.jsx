@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import PlanetsSearchContext from './PlanetsSearchContext';
 import getPlanets from '../services/api';
 
-const selectColumn = [
+export const selectColumn = [
   'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
 ];
 
@@ -20,6 +20,7 @@ function PlanetsSearchProvider({ children }) {
     filter,
     setFilter,
     filteredPlanets,
+    setFilteredPlanets,
     filterByNumericValues,
     setFilterByNumericValues,
     filterValues,
@@ -47,7 +48,8 @@ function PlanetsSearchProvider({ children }) {
   }, [planets]);
 
   useEffect(() => {
-    filterByNumericValues.forEach((value) => {
+    setFilteredPlanets(planets);
+    (filterByNumericValues.forEach((value) => {
       if (value.comparison === 'maior que') {
         const filtered = filteredPlanets.filter((planet) => (
           Number(planet[value.column]) > Number(value.value)
@@ -64,7 +66,7 @@ function PlanetsSearchProvider({ children }) {
         ));
         setFilteredPlanets(filtered);
       }
-    });
+    }));
   }, [filterByNumericValues]);
 
   return (

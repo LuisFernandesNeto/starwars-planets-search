@@ -1,16 +1,36 @@
 import React, { useContext } from 'react';
 import PlanetsSearchContext from '../context/PlanetsSearchContext';
+import { selectColumn } from '../context/PlanetsSearchProvider';
 
 function Table() {
-  const { filteredPlanets, filterByNumericValues } = useContext(PlanetsSearchContext);
+  const { filteredPlanets,
+    filterByNumericValues,
+    setFilterByNumericValues,
+    setFilterValues,
+    setFilteredPlanets,
+    planets } = useContext(PlanetsSearchContext);
 
-  const handleClick = () => {
-
+  const handleClick = (column) => {
+    setFilterByNumericValues((prevState) => (
+      prevState.filter((prev) => (
+        prev.column !== column
+      ))
+    ));
+    setFilterValues((prevState) => (
+      [...prevState, column]
+    ));
+    setFilteredPlanets(planets);
   };
+
+  const clearFilteredValues = () => {
+    setFilterByNumericValues([]);
+    setFilterValues(selectColumn);
+  };
+
   return (
     <div>
       {filterByNumericValues.map((value, index) => (
-        <div key={ index }>
+        <div data-testid="filter" key={ index }>
           <p>
             {value.column}
             {' '}
@@ -18,9 +38,23 @@ function Table() {
             {' '}
             {value.value}
           </p>
-          <button type="button" onClick={ handleClick }>Excluir</button>
+          <button
+            type="button"
+            onClick={ () => handleClick(value.column) }
+          >
+            Excluir
+
+          </button>
         </div>
       ))}
+      <button
+        onClick={ clearFilteredValues }
+        data-testid="button-remove-filters"
+        type="button"
+      >
+        Remover todas filtragens
+
+      </button>
       <table>
         <thead>
           <tr>
