@@ -3,11 +3,16 @@ import propTypes from 'prop-types';
 import PlanetsSearchContext from './PlanetsSearchContext';
 import getPlanets from '../services/api';
 
+const selectColumn = [
+  'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+];
+
 function PlanetsSearchProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filter, setFilter] = useState({ name: '' });
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [filterValues, setFilterValues] = useState(selectColumn);
 
   const contextType = {
     planets,
@@ -17,6 +22,8 @@ function PlanetsSearchProvider({ children }) {
     filteredPlanets,
     filterByNumericValues,
     setFilterByNumericValues,
+    filterValues,
+    setFilterValues,
   };
 
   const fetchPlanetsSearch = async () => {

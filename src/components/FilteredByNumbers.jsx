@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PlanetsSearchContext from '../context/PlanetsSearchContext';
 
 function FilteredByNumbers() {
-  const { setFilterByNumericValues } = useContext(PlanetsSearchContext);
+  const { setFilterByNumericValues,
+    filterValues, setFilterValues } = useContext(PlanetsSearchContext);
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
@@ -16,7 +17,16 @@ function FilteredByNumbers() {
     setFilterByNumericValues((prevState) => (
       [...prevState, { column, comparison, value: number }]
     ));
+    setFilterValues(filterValues.filter((value) => (
+      value !== column
+    )));
   };
+
+  useEffect(() => {
+    setColumn(filterValues[0]);
+    setComparison('maior que');
+    setNumber(0);
+  }, [filterValues]);
 
   return (
     <div>
@@ -25,11 +35,9 @@ function FilteredByNumbers() {
         data-testid="column-filter"
         onChange={ ({ target: { value } }) => { handleChange(value, setColumn); } }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {filterValues.map((select, index) => (
+          <option key={ index } value={ select }>{select}</option>
+        ))}
       </select>
       <select
         value={ comparison }
