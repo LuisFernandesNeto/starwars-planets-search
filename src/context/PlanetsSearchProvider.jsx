@@ -49,7 +49,7 @@ function PlanetsSearchProvider({ children }) {
 
   useEffect(() => {
     setFilteredPlanets(planets);
-    (filterByNumericValues.forEach((value) => {
+    filterByNumericValues.forEach((value) => {
       if (value.comparison === 'maior que') {
         const filtered = filteredPlanets.filter((planet) => (
           Number(planet[value.column]) > Number(value.value)
@@ -66,7 +66,7 @@ function PlanetsSearchProvider({ children }) {
         ));
         setFilteredPlanets(filtered);
       }
-    }));
+    });
   }, [filterByNumericValues]);
 
   return (

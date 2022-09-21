@@ -7,6 +7,9 @@ import testData from '../../cypress/mocks/testData';
 const eleven = 11;
 const four = 4;
 const three = 3;
+const columnFilter = 'column-filter';
+const comparisonFilter = 'comparison-filter';
+const valueFilter = 'value-filter';
 describe('Testanto tudo', () => {
   test('I am your test', async () => {
     jest.spyOn(global, 'fetch');
@@ -36,9 +39,9 @@ describe('Testanto tudo', () => {
     render(<App />);
     await waitFor(() => expect(global.fetch).toHaveBeenCalled());
 
-    const columnSelect = screen.getByTestId('column-filter');
-    const comparisonSelect = screen.getByTestId('comparison-filter');
-    const valueinput = screen.getByTestId('value-filter');
+    const columnSelect = screen.getByTestId(columnFilter);
+    const comparisonSelect = screen.getByTestId(comparisonFilter);
+    const valueinput = screen.getByTestId(valueFilter);
     const buttonElement = screen.getByRole('button', { name: /filtrar/i });
 
     expect(columnSelect).toBeInTheDocument();
@@ -76,9 +79,9 @@ describe('Testanto tudo', () => {
     render(<App />);
     await waitFor(() => expect(global.fetch).toHaveBeenCalled());
 
-    const columnSelect = screen.getByTestId('column-filter');
-    const comparisonSelect = screen.getByTestId('comparison-filter');
-    const valueinput = screen.getByTestId('value-filter');
+    const columnSelect = screen.getByTestId(columnFilter);
+    const comparisonSelect = screen.getByTestId(comparisonFilter);
+    const valueinput = screen.getByTestId(valueFilter);
     const buttonElement = screen.getByRole('button', { name: /filtrar/i });
 
     userEvent.selectOptions(columnSelect, 'orbital_period');
@@ -102,9 +105,9 @@ describe('Testanto tudo', () => {
     render(<App />);
     await waitFor(() => expect(global.fetch).toHaveBeenCalled());
 
-    const columnSelect = screen.getByTestId('column-filter');
-    const comparisonSelect = screen.getByTestId('comparison-filter');
-    const valueinput = screen.getByTestId('value-filter');
+    const columnSelect = screen.getByTestId(columnFilter);
+    const comparisonSelect = screen.getByTestId(comparisonFilter);
+    const valueinput = screen.getByTestId(valueFilter);
     const buttonElement = screen.getByRole('button', { name: /filtrar/i });
 
     userEvent.selectOptions(columnSelect, 'orbital_period');
